@@ -157,8 +157,9 @@ class PDFGenerator:
         for ext in extensions:
             logo_path = logos_dir / f"{logo_filename}{ext}" if not logo_filename.endswith(tuple(extensions)) else logos_dir / logo_filename
             if logo_path.exists():
-                # Возвращаем абсолютный путь для WeasyPrint
-                return str(logo_path.absolute())
+                # Возвращаем относительный путь от корневой директории проекта
+                # base_url будет указывать на корневую директорию
+                return f"logos/{logo_path.name}"
 
         return ""
 
@@ -217,7 +218,9 @@ class PDFGenerator:
             # Создаем объект HTML из строки с подавлением предупреждений
             stderr_capture = io.StringIO()
             with redirect_stderr(stderr_capture):
-                html_doc = HTML(string=html_content)
+                # Указываем base_url для правильного разрешения путей к логотипам
+                base_url = str(self.data_dir.parent.absolute())
+                html_doc = HTML(string=html_content, base_url=base_url)
 
             # Пытаемся сгенерировать PDF, если файл заблокирован - создаем уникальное имя
             final_output_path = output_path
@@ -243,10 +246,9 @@ class PDFGenerator:
                     if attempt == 0:
                         print(f"Файл {output_path} заблокирован. Пытаюсь создать файл с уникальным именем...")
 
-                    timestamp = datetime.now().strftime("%H%M%S")
                     stem = output_path.stem
                     suffix = output_path.suffix
-                    final_output_path = output_path.parent / f"{stem}_{timestamp}_{attempt + 1}{suffix}"
+                    final_output_path = output_path.parent / f"{stem}_attempt_{attempt + 1}{suffix}"
                     attempt += 1
 
                 except Exception as e:
@@ -366,7 +368,9 @@ class PDFGenerator:
             invoice_data['company_logo'] = ""
 
         # Генерируем PDF
-        output_filename = f"invoice_{selected_invoice_id}_{selected_data_file.stem}.pdf"
+        from datetime import datetime
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        output_filename = f"invoice_{selected_invoice_id}_{selected_data_file.stem}_{timestamp}.pdf"
         output_path = self.output_dir / output_filename
 
         try:
