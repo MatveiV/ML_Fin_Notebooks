@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Счет № {{ invoice_id }}</title>
+    <style>
+        @font-face {
+            font-family: 'DejaVu Sans';
+            src: local('DejaVu Sans');
+        }
+        body {
+            font-family: 'DejaVu Sans', 'Arial', sans-serif;
+            font-size: 14px;
+            line-height: 1.4;
+            margin: 40px;
+            color: #333;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 20px;
+        }
+        .company-info {
+            margin-bottom: 30px;
+        }
+        .invoice-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .invoice-number {
+            font-size: 18px;
+            color: #666;
+        }
+        .customer-info, .invoice-details {
+            margin: 20px 0;
+        }
+        .section-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+        }
+        .info-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .info-table th, .info-table td {
+            border: 1px solid #ddd;
+            padding: 8px 12px;
+            text-align: left;
+            vertical-align: top;
+        }
+        .info-table th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+            width: 30%;
+        }
+        .product-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .product-table th, .product-table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        .product-table th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+        }
+        .product-table .quantity, .product-table .price, .product-table .total {
+            text-align: right;
+        }
+        .total-row {
+            font-weight: bold;
+            font-size: 16px;
+            background-color: #f0f0f0;
+        }
+        .total-row .total {
+            color: #d32f2f;
+        }
+        .description {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-left: 4px solid #007bff;
+        }
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+            border-top: 1px solid #ddd;
+            padding-top: 20px;
+        }
+        .signature-section {
+            margin-top: 40px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .signature {
+            width: 45%;
+            text-align: center;
+        }
+        .signature-line {
+            border-bottom: 1px solid #333;
+            margin: 40px 0 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="company-info">
+            <div class="logo">
+                {% if company_logo %}
+                <img src="{{ company_logo }}" alt="Логотип компании" style="max-width: 100px; max-height: 80px; margin-bottom: 10px;">
+                {% else %}
+                <div style="width: 100px; height: 80px; background-color: #007bff; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; border-radius: 8px; margin-bottom: 10px;">
+                    LOGO
+                </div>
+                {% endif %}
+            </div>
+            <h1>ООО "ТехноСервис"</h1>
+            <p>г. Москва, ул. Примерная, д. 1<br>
+            Тел: +7 (495) 123-45-67<br>
+            Email: info@technoservice.ru</p>
+        </div>
+        <div class="invoice-title">СЧЕТ-ФАКТУРА</div>
+        <div class="invoice-number">№ {{ invoice_id }}</div>
+        <div>от {{ date }}</div>
+    </div>
+
+    <div class="customer-info">
+        <div class="section-title">Информация о покупателе:</div>
+        <table class="info-table">
+            <tr>
+                <th>Наименование:</th>
+                <td>{{ customer_name }}</td>
+            </tr>
+            <tr>
+                <th>Адрес:</th>
+                <td>{{ customer_address }}</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="invoice-details">
+        <div class="section-title">Детали счета:</div>
+        <table class="product-table">
+            <thead>
+                <tr>
+                    <th>Наименование товара</th>
+                    <th class="quantity">Количество</th>
+                    <th class="price">Цена за ед., руб.</th>
+                    <th class="total">Сумма, руб.</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ product_name }}</td>
+                    <td class="quantity">{{ quantity }}</td>
+                    <td class="price">{{ "{:,.0f}".format(price) }}</td>
+                    <td class="total">{{ "{:,.0f}".format(total) }}</td>
+                </tr>
+                <tr class="total-row">
+                    <td colspan="3"><strong>Итого к оплате:</strong></td>
+                    <td class="total">{{ "{:,.0f}".format(total) }} руб.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    {% if description %}
+    <div class="description">
+        <div class="section-title">Описание:</div>
+        <p>{{ description }}</p>
+    </div>
+    {% endif %}
+
+    <div class="signature-section">
+        <div class="signature">
+            <div class="signature-line"></div>
+            <p>Директор<br>ООО "ТехноСервис"</p>
+            {% if director_power_attorney_number and director_power_attorney_date %}
+            <p style="font-size: 11px; margin-top: 5px; text-align: center;">
+                Доверенность № {{ director_power_attorney_number }} от {{ director_power_attorney_date }}
+            </p>
+            {% endif %}
+        </div>
+        <div class="signature">
+            <div class="signature-line"></div>
+            <p>Главный бухгалтер</p>
+            {% if accountant_power_attorney_number and accountant_power_attorney_date %}
+            <p style="font-size: 11px; margin-top: 5px; text-align: center;">
+                Доверенность № {{ accountant_power_attorney_number }} от {{ accountant_power_attorney_date }}
+            </p>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>Счет действителен в течение 5 банковских дней с момента выставления.</p>
+        <p>Оплата производится по безналичному расчету.</p>
+    </div>
+</body>
+</html>

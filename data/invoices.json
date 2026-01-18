@@ -1,0 +1,50 @@
+[
+    {
+        "invoice_id": "INV-101",
+        "date": "2024-01-20",
+        "customer_name": "Александрова Мария Петровна",
+        "customer_address": "г. Москва, ул. Тверская, д. 8, кв. 12",
+        "product_name": "Принтер лазерный HP",
+        "quantity": 1,
+        "price": 35000,
+        "total": 35000,
+        "description": "Цветной лазерный принтер для офиса",
+        "director_power_attorney_number": "Д-001",
+        "director_power_attorney_date": "2024-01-15",
+        "accountant_power_attorney_number": "Д-002",
+        "accountant_power_attorney_date": "2024-01-15",
+        "company_logo": "technoservice_logo.jpg"
+    },
+    {
+        "invoice_id": "INV-102",
+        "date": "2024-01-21",
+        "customer_name": "Васильев Сергей Иванович",
+        "customer_address": "г. Санкт-Петербург, пр. Литейный, д. 18",
+        "product_name": "Внешний жесткий диск WD 2TB",
+        "quantity": 1,
+        "price": 15000,
+        "total": 15000,
+        "description": "Надежное хранилище данных с USB 3.0",
+        "director_power_attorney_number": "Д-001",
+        "director_power_attorney_date": "2024-01-15",
+        "accountant_power_attorney_number": "Д-002",
+        "accountant_power_attorney_date": "2024-01-15",
+        "company_logo": "technoservice_logo.jpg"
+    },
+    {
+        "invoice_id": "INV-103",
+        "date": "2024-01-22",
+        "customer_name": "Новикова Екатерина Александровна",
+        "customer_address": "г. Екатеринбург, ул. Вайнера, д. 14",
+        "product_name": "Наушники беспроводные Sony",
+        "quantity": 2,
+        "price": 18000,
+        "total": 36000,
+        "description": "Беспроводные наушники с активным шумоподавлением",
+        "director_power_attorney_number": "Д-001",
+        "director_power_attorney_date": "2024-01-15",
+        "accountant_power_attorney_number": "Д-002",
+        "accountant_power_attorney_date": "2024-01-15",
+        "company_logo": "technoservice_logo.jpg"
+    }
+]

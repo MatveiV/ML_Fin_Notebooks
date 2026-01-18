@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Счет {{ invoice_id }}</title>
+    <style>
+        @font-face {
+            font-family: 'DejaVu Sans';
+            src: local('DejaVu Sans');
+        }
+        body { font-family: 'DejaVu Sans', Arial, sans-serif; margin: 40px; }
+        .header { text-align: center; border-bottom: 2px solid #000; padding-bottom: 20px; margin-bottom: 30px; }
+        .title { font-size: 28px; font-weight: bold; }
+        .invoice-info { margin: 20px 0; }
+        .customer { margin: 20px 0; }
+        .details { margin: 20px 0; }
+        .details table { width: 100%; border-collapse: collapse; }
+        .details th, .details td { border: 1px solid #000; padding: 8px; text-align: left; }
+        .details th { background-color: #f0f0f0; }
+        .total { font-weight: bold; font-size: 18px; margin-top: 20px; }
+        .footer { margin-top: 50px; font-size: 12px; color: #666; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo" style="text-align: center; margin-bottom: 20px;">
+            {% if company_logo %}
+            <img src="{{ company_logo }}" alt="Логотип компании" style="max-width: 80px; max-height: 60px;">
+            {% else %}
+            <div style="width: 80px; height: 60px; background-color: #28a745; color: white; display: inline-flex; align-items: center; justify-content: center; font-weight: bold; border-radius: 6px;">
+                LOGO
+            </div>
+            {% endif %}
+        </div>
+        <div class="title">СЧЕТ № {{ invoice_id }}</div>
+        <div>Дата: {{ date }}</div>
+    </div>
+
+    <div class="customer">
+        <h3>Покупатель:</h3>
+        <p><strong>{{ customer_name }}</strong></p>
+        <p>{{ customer_address }}</p>
+    </div>
+
+    <div class="details">
+        <h3>Детали:</h3>
+        <table>
+            <tr><th>Товар:</th><td>{{ product_name }}</td></tr>
+            <tr><th>Количество:</th><td>{{ quantity }}</td></tr>
+            <tr><th>Цена:</th><td>{{ "{:,.0f}".format(price) }} руб.</td></tr>
+            <tr><th>Итого:</th><td class="total">{{ "{:,.0f}".format(total) }} руб.</td></tr>
+        </table>
+    </div>
+
+    {% if description %}
+    <div>
+        <h3>Описание:</h3>
+        <p>{{ description }}</p>
+    </div>
+    {% endif %}
+
+    <div class="footer">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+            <div style="text-align: center; width: 45%;">
+                <div style="border-bottom: 1px solid #000; margin-bottom: 5px;"></div>
+                <p style="font-size: 12px;">Директор ООО "ТехноСервис"</p>
+                {% if director_power_attorney_number and director_power_attorney_date %}
+                <p style="font-size: 10px; margin-top: 3px;">Доверенность № {{ director_power_attorney_number }} от {{ director_power_attorney_date }}</p>
+                {% endif %}
+            </div>
+            <div style="text-align: center; width: 45%;">
+                <div style="border-bottom: 1px solid #000; margin-bottom: 5px;"></div>
+                <p style="font-size: 12px;">Главный бухгалтер</p>
+                {% if accountant_power_attorney_number and accountant_power_attorney_date %}
+                <p style="font-size: 10px; margin-top: 3px;">Доверенность № {{ accountant_power_attorney_number }} от {{ accountant_power_attorney_date }}</p>
+                {% endif %}
+            </div>
+        </div>
+        <p>Спасибо за покупку!</p>
+    </div>
+</body>
+</html>
