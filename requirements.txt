@@ -1,0 +1,36 @@
+# Verified environment for HW6-HW8 and mlfin_core.
+# Pinned to the versions the committed notebook outputs were produced with.
+# Python 3.14.
+
+# --- core numerics / data ---
+pandas==3.0.2
+numpy==2.4.4
+scipy==1.17.1
+statsmodels==0.15.0
+
+# --- data access ---
+yfinance
+requests
+
+# --- notebook execution ---
+notebook
+nbformat
+nbclient
+nbconvert
+ipykernel
+jupyter-core
+matplotlib
+
+# --- boosting model zoo (HW8) ---
+lightgbm==4.7.0
+xgboost==3.4.1
+catboost==1.2.10
+
+# --- experiment tracking (HW8) ---
+mlflow==3.16.1
+
+# --- validation / uncertainty utilities ---
+scikit-learn==1.9.0
+
+# --- tests ---
+pytest
